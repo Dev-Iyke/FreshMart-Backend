@@ -107,7 +107,7 @@ app.post("/auth/login", async (request, response) => {
   const accessToken = jwt.sign(
     {id: existingUser?._id},
     process.env.ACCESS_TOKEN,
-    {expiresIn: '10m'}
+    {expiresIn: '1d'}
   )
 
   const refreshToken = jwt.sign(
@@ -129,12 +129,38 @@ app.post("/auth/login", async (request, response) => {
 //CRUD
 //Create category
 app.post("/category/create", async(request, response) => {
+  // Get user details from token
+  const {authorization} = request.headers
+  if(!authorization){
+    return response.status(401).json({
+      success: false,
+      message: "Please sign in"
+    })
+  }
+
+  //Retrieve access token
+  const token = authorization.slice(7)
+
+  //decode token
+  const userData = jwt.decode(token)
+
+  //find user with id from decoded token
+  const user = await Auth.findById(userData.id)
+  if(user.role !== 'Admin'){
+    return response.status(401).json({
+      success: false,
+      message: "Unauthorized. Please login as an admin"
+    })
+  }
+
+  //Proceed to check if there is a category name
   if (!request.body){
     return response.status(400).json({
       success: false,
       message: "missing request body"
     })
   }
+
   const {name} = request.body
   if (!name){
     return response.status(400).json({
@@ -158,6 +184,31 @@ app.post("/category/create", async(request, response) => {
 
 //Create product
 app.post("/product/create", async(request, response) => {
+  // Get user details from token
+  const {authorization} = request.headers
+  if(!authorization){
+    return response.status(401).json({
+      success: false,
+      message: "Please sign in"
+    })
+  }
+
+  //Retrieve access token
+  const token = authorization.slice(7)
+
+  //decode token
+  const userData = jwt.decode(token)
+
+  //find user with id from decoded token
+  const user = await Auth.findById(userData.id)
+  if(user.role !== 'Admin'){
+    return response.status(401).json({
+      success: false,
+      message: "Unauthorized. Please login as an admin"
+    })
+  }
+
+  //Proceed to check if there is a product name
   if (!request.body){
     return response.status(400).json({
       success: false,
