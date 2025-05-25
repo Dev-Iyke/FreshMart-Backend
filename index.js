@@ -1,12 +1,14 @@
 const express = require("express")
 const dotenv = require("dotenv")
 const mongoose = require("mongoose")
+const cors = require("cors")
 const { handleUserSignup, handleLogin, handleGetAllUsers } = require("./controllers/auth")
 const { authorization, adminAuthorization } = require("./middlewares/auth")
 const { handleGetAllCategories, handleCreateCategory, handleCreateProducts, handleGetAllProducts, handleGetProduct, handleCreateOrders } = require("./controllers/products")
 
 const app =  express()
 app.use(express.json())
+app.use(cors())
 dotenv.config()
 const url = process.env.MONGODB_URL || "mongodb+srv://fresh-mart:fresh-mart@fresh-mart.eofdzso.mongodb.net/?retryWrites=true&w=majority&appName=fresh-mart"
 const port = process.env.PORT
