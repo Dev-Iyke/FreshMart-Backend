@@ -5,6 +5,7 @@ const cors = require("cors")
 const { handleUserSignup, handleLogin, handleGetAllUsers } = require("./controllers/auth")
 const { authorization, adminAuthorization } = require("./middlewares/auth")
 const { handleGetAllCategories, handleCreateCategory, handleCreateProducts, handleGetAllProducts, handleGetProduct, handleCreateOrders } = require("./controllers/products")
+const routes = require("./routes")
 
 const app =  express()
 app.use(express.json())
@@ -35,38 +36,4 @@ app.get("/", (request, response) => {
   response.send("You are connected")
 })
 
-//AUTHENTICATION
-//SIGNUP
-app.post('/auth/signup', handleUserSignup)
-
-//LOGIN
-app.post("/auth/login", handleLogin)
-
-app.get("/users", authorization, adminAuthorization, handleGetAllUsers)
-
-
-//CRUD
-//Category
-app.post("/category/create", authorization, adminAuthorization, handleCreateCategory)
-
-// Get all categories
-app.get("/categories", handleGetAllCategories)
-
-
-//Product
-//Create product
-app.post("/product/create", authorization, adminAuthorization, handleCreateCategory)
-
-// Get all products
-app.get("/products", handleGetAllProducts)
-
-// Get a product
-app.get("/products/:id", handleGetProduct)
-
-
-//Order
-//Create an order
-app.post('/orders', authorization, handleCreateOrders)
-
-//Get an order
-app.get('/orders', authorization, handleCreateOrders)
+app.use(routes)
