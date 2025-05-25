@@ -1,6 +1,6 @@
 const express = require("express")
 const { authorization, adminAuthorization } = require("../middlewares/auth")
-const { handleCreateCategory, handleGetAllCategories, handleGetAllProducts, handleGetProduct, handleCreateOrders, handleCreateOrders } = require("../controllers/products")
+const { handleCreateCategory, handleGetAllCategories, handleGetAllProducts, handleGetProduct, handleCreateOrders } = require("../controllers/products")
 
 const productsRouter = express.Router()
 
@@ -28,6 +28,6 @@ productsRouter.get("/products/:id", handleGetProduct)
 productsRouter.post('/orders', authorization, handleCreateOrders)
 
 //Get an order
-productRouter.get('/orders', authorization, handleCreateOrders)
+productsRouter.get('/orders', authorization, handleCreateOrders)
 
 module.exports = productsRouter
