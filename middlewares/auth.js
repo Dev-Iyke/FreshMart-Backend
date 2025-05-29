@@ -27,22 +27,33 @@ const authorization = async (request, response, next) => {
     
     //Get token passed in header
     const token = request.header('authorization')
-  
+    
     //Check if token is available
     if(!token){
       return response.status(401).json({
-        success: false,
-        message: 'Please Login'
+      success: false,
+      message: 'Please Login'
       })
     }
-  
+
     //token comes with 'Bearer', so we split
     const splitToken = token.split(" ")
     //select the actual token
     const actualToken = splitToken[1]
-  
-    //Verify that the token is mine
-    const decoded = jwt.verify(actualToken, `${process.env.ACCESS_TOKEN}`)
+
+    //Verify that the token is mine and not expired
+    let decoded;
+    try {
+      decoded = jwt.verify(actualToken, `${process.env.ACCESS_TOKEN}`);
+    } catch (err) {
+      // If token is expired, we catch the error and return a message
+      if (err.name === 'TokenExpiredError') {
+      return response.status(401).json({
+        success: false,
+        message: 'Token expired. Please login again'
+      });
+      }
+    }
   
     // Check if token has my signature
     if(!decoded) {

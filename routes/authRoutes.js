@@ -11,6 +11,6 @@ authRouter.post('/auth/signup', handleUserSignup)
 //LOGIN
 authRouter.post("/auth/login", handleLogin)
 
-authRouter.get("/users", authorization, adminAuthorization, handleGetAllUsers)
+authRouter.get("/users", authorization, handleGetAllUsers)
 
 module.exports = authRouter

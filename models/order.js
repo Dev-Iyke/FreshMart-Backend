@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const orderSchema = new Schema({
-  user: { type: Schema.Types.ObjectId, ref: "Auth", required: true }, // Reference to user placing the order
+  user: { type: Schema.Types.ObjectId, ref: "Auth", required: true },
   products: [
     {
       product: { type: Schema.Types.ObjectId, ref: "Product", required: true },
@@ -12,7 +12,7 @@ const orderSchema = new Schema({
     }
   ],
   totalAmount: { type: Number, required: true, default: 0 },
-  orderStatus: { type: String, required: true, default: "Pending" }, // Use string for status
+  orderStatus: { type: String, required: true, default: "Pending" },
   shippingAddress: {
     street: { type: String, default: "" },
     city: { type: String, default: "" },
@@ -20,7 +20,7 @@ const orderSchema = new Schema({
     zip: { type: String, default: "" },
     country: { type: String, default: "" }
   }
-}, { timestamps: true }); // Correct option is 'timestamps'
+}, { timestamps: true });
 
 const Order = mongoose.model('Order', orderSchema);
 
