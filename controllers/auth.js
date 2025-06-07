@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { Auth } = require("../models/auth");
 const { validateEmail } = require("../validators/email");
+const { sendSignupEmail } = require("../helpers/sendMail");
 
 const handleGetAllUsers = async (request, response) => {
   try {
@@ -62,6 +63,7 @@ const handleUserSignup = async (request, response) => {
 
     const newUser = new Auth(data);
     await newUser.save();
+    await sendSignupEmail(email, firstName );
     return response.status(201).json({
       success: true,
       message: `User registered successfully`,
@@ -90,7 +92,7 @@ const handleLogin = async (request, response) => {
     const isMatch = await bcrypt.compare(password, existingUser?.password)
     if (!isMatch){
       return response.status(400).json({
-        success: true,
+        success: false,
         message: `Invalid email or password`
       })
     }

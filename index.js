@@ -28,8 +28,8 @@ mongoose.connect(url)
 
 
 //APIs
-app.get("/", (request, response) => {
+app.get("/api/v1/", (request, response) => {
   response.send("You are connected")
 })
 
-app.use(routes)
+app.use("/api/v1", routes)

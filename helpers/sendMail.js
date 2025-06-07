@@ -1,67 +1,125 @@
 const nodeMailer = require("nodemailer")
 
 const sendForgotPasswordEmail = async (email, token) => {
-  console.log(process.env.EMAIL_PASSWORD)
   try {
-    let mailTransport = nodeMailer.createTransport({
-      //put in login details and service to send email(gmail, outlook etc)
+    const mailTransport = nodeMailer.createTransport({
       service: "gmail",
       auth: {
-        user: `${process.env.EMAIL_ADDRESS}`,
-        pass: `${process.env.EMAIL_PASSWORD}`,
-      }
-    })
-    
-    //Mail details
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const resetUrl = `https://yourcareerex.com/reset-password?token=${token}`;
+
     const mailDetails = {
-      from: `${process.env.EMAIL_ADDRESS}`,
-      to: `${email}`,
-      subject: "RESET PASSWORD",
+      from: process.env.EMAIL_ADDRESS,
+      to: email,
+      subject: "Reset Your FreshMart Password",
       html: `
-      <div>
-        <h1>Here is the reset password token: ${token}. please click on link below</h1>
-        <a href="https://yourcareerex.com/reset-password?token=${token}">Reset Password</a>
-        <p>if the button does not work for any reason, please click the link below</p> <br/>
-        https://yourcareerex.com/reset-password?token=${token}
-      </div>
-      `
-    }
-  
-    await mailTransport.sendMail(mailDetails)
+        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
+          <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="text-align: center;">
+              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+            </div>
+            <h2 style="color: #2E7D32;">FreshMart</h2>
+            <h3>Password Reset Requested</h3>
+            <p>Hi there,</p>
+            <p>You requested to reset your password. Click the button below to proceed:</p>
+            <a href="${resetUrl}" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Reset Password</a>
+            <p style="margin-top: 20px;">If the button doesn’t work, copy and paste this link in your browser:</p>
+            <p style="word-break: break-all;">${resetUrl}</p>
+            <p style="margin-top: 30px;">— The FreshMart Team</p>
+          </div>
+        </div>
+      `,
+    };
+
+    await mailTransport.sendMail(mailDetails);
   } catch (error) {
-    console.log(error)
+    console.error(error);
   }
-}
+};
+
 
 const sendOrderConfirmationEmail = async (email, firstName, orderId) => {
   try {
-    let mailTransport = nodeMailer.createTransport({
-      //put in login details and service to send email(gmail, outlook etc)
+    const mailTransport = nodeMailer.createTransport({
       service: "gmail",
       auth: {
-        user: `${process.env.EMAIL_ADDRESS}`,
-        pass: `${process.env.EMAIL_PASSWORD}`,
-      }
-    })
-    //Mail details
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
     const mailDetails = {
-      from: `${process.env.EMAIL_ADDRESS}`,
-      to: `${email}`,
-      subject: "ORDER CONFIRMATION",
+      from: process.env.EMAIL_ADDRESS,
+      to: email,
+      subject: "FreshMart Order Confirmation",
       html: `
-      <div>
-        <h1>Hi, ${firstName}, <br/> Your order (${orderId}) has been confirmed.</h1>
-        <p>Thank you for choosing us </p>
-      </div>
-      `
-    }
-    await mailTransport.sendMail(mailDetails)
+        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
+          <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="text-align: center;">
+              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+            </div>
+            <h2 style="color: #2E7D32;">FreshMart</h2>
+            <h3>Order Confirmation</h3>
+            <p>Hi ${firstName},</p>
+            <p>Thanks for shopping with us! Your order <strong>#${orderId}</strong> has been confirmed and is now being processed.</p>
+            <p>We’ll notify you once it ships!</p>
+            <a href="https://yourcareerex.com/orders/${orderId}" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Order</a>
+            <p style="margin-top: 30px;">— The FreshMart Team</p>
+          </div>
+        </div>
+      `,
+    };
+
+    await mailTransport.sendMail(mailDetails);
   } catch (error) {
-    console.log(error)
+    console.error(error);
   }
-}
+};
+
+const sendSignupEmail = async (email, firstName) => {
+  try {
+    const mailTransport = nodeMailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: process.env.EMAIL_ADDRESS,
+        pass: process.env.EMAIL_PASSWORD,
+      },
+    });
+
+    const mailDetails = {
+      from: process.env.EMAIL_ADDRESS,
+      to: email,
+      subject: "Welcome to FreshMart!",
+      html: `
+        <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
+          <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+            <div style="text-align: center;">
+              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+            </div>
+            <h2 style="color: #2E7D32;">FreshMart</h2>
+            <h3>Welcome, ${firstName}!</h3>
+            <p>We're thrilled to have you join FreshMart.</p>
+            <p>Start exploring fresh groceries and exciting deals today.</p>
+            <a href="https://shoplive-sandy.vercel.app/freshmart-logo-2.png" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Start Shopping</a>
+            <p style="margin-top: 30px;">— The FreshMart Team</p>
+          </div>
+        </div>
+      `,
+    };
+
+    await mailTransport.sendMail(mailDetails);
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 
 module.exports = {
   sendForgotPasswordEmail,
   sendOrderConfirmationEmail,
+  sendSignupEmail,
 }
