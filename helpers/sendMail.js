@@ -20,7 +20,7 @@ const sendForgotPasswordEmail = async (email, token) => {
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
           <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
             <div style="text-align: center;">
-              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+              <img src="https://shoplive-sandy.vercel.app/freshmart-logo-2.png" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #2E7D32;">FreshMart</h2>
             <h3>Password Reset Requested</h3>
@@ -60,14 +60,14 @@ const sendOrderConfirmationEmail = async (email, firstName, orderId) => {
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
           <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
             <div style="text-align: center;">
-              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+              <img src="https://shoplive-sandy.vercel.app/freshmart-logo-2.png" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #2E7D32;">FreshMart</h2>
             <h3>Order Confirmation</h3>
             <p>Hi ${firstName},</p>
             <p>Thanks for shopping with us! Your order <strong>#${orderId}</strong> has been confirmed and is now being processed.</p>
             <p>We’ll notify you once it ships!</p>
-            <a href="https://yourcareerex.com/orders/${orderId}" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Order</a>
+            <a href="https://shoplive-sandy.vercel.app/orders/${orderId}" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">View Order</a>
             <p style="margin-top: 30px;">— The FreshMart Team</p>
           </div>
         </div>
@@ -98,13 +98,13 @@ const sendSignupEmail = async (email, firstName) => {
         <div style="font-family: Arial, sans-serif; padding: 20px; background-color: #f9f9f9;">
           <div style="max-width: 600px; margin: auto; background: #ffffff; padding: 30px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
             <div style="text-align: center;">
-              <img src="cid:logoImage" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
+              <img src="https://shoplive-sandy.vercel.app/freshmart-logo-2.png" alt="FreshMart Logo" style="max-width: 150px; margin-bottom: 20px;" />
             </div>
             <h2 style="color: #2E7D32;">FreshMart</h2>
             <h3>Welcome, ${firstName}!</h3>
             <p>We're thrilled to have you join FreshMart.</p>
             <p>Start exploring fresh groceries and exciting deals today.</p>
-            <a href="https://shoplive-sandy.vercel.app/freshmart-logo-2.png" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Start Shopping</a>
+            <a href="https://shoplive-sandy.vercel.app/" style="background-color: #2E7D32; color: white; padding: 10px 20px; text-decoration: none; border-radius: 4px;">Start Shopping</a>
             <p style="margin-top: 30px;">— The FreshMart Team</p>
           </div>
         </div>
